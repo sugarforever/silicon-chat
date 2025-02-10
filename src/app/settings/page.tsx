@@ -27,7 +27,7 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="mx-auto max-w-2xl space-y-8">
+    <div className="mx-auto max-w-2xl space-y-8 pt-10">
       <div className="space-y-2">
         <h1 className="text-3xl font-bold">Settings</h1>
         <p className="text-muted-foreground">
@@ -45,7 +45,7 @@ export default function SettingsPage() {
             placeholder="Enter your API key"
           />
         </div>
-        <Button type="submit">Save Settings</Button>
+        <Button type="submit">Save</Button>
       </form>
     </div>
   );

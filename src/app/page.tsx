@@ -2,7 +2,7 @@
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center space-y-8 text-center">
+    <div className="flex flex-col items-center justify-center space-y-8 text-center pt-10">
       <div className="space-y-4">
         <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
           Welcome to SiliconChat
