@@ -1,23 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { ChatInput } from "@/components/ChatInput";
-
-interface Message {
-  role: "user" | "assistant";
-  content: string;
-  reasoning_content?: string;
-}
+import { MessageCard } from "@/components/MessageCard";
+import { Message } from "@/types/chat";
 
 interface Model {
   id: string;
@@ -205,12 +192,7 @@ export default function ChatPage() {
       <div className="flex-1 overflow-hidden flex flex-col">
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {messages.map((message, index) => (
-            <Card key={index} className={`p-4 ${message.role === "user" ? "bg-primary-foreground" : "bg-muted"}`}>
-              {message.reasoning_content && (
-                <div className="mb-2 text-xs text-muted-foreground">{message.reasoning_content}</div>
-              )}
-              <p className="whitespace-pre-wrap text-sm">{message.content}</p>
-            </Card>
+            <MessageCard key={index} message={message} />
           ))}
         </div>
       </div>

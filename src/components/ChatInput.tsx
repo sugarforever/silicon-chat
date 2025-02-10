@@ -7,6 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Send } from 'lucide-react';
 
 interface Model {
   id: string;
@@ -35,40 +36,40 @@ export function ChatInput({
   models,
 }: ChatInputProps) {
   return (
-    <div className="space-y-4">
-      <div className="flex items-center space-x-2">
+    <div className="space-y-2">
+      <Textarea
+        value={input}
+        onChange={(e) => onInputChange(e.target.value)}
+        placeholder="Type your message..."
+        className="min-h-[60px] resize-none text-sm"
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            onSubmit();
+          }
+        }}
+      />
+      <div className="flex items-center justify-between space-x-2">
         <Select value={selectedModel} onValueChange={onModelChange} disabled={isLoadingModels}>
-          <SelectTrigger className="w-[200px]">
-            <SelectValue placeholder={isLoadingModels ? "Loading models..." : "Select model"} />
+          <SelectTrigger className="h-8 w-[180px] text-xs">
+            <SelectValue placeholder={isLoadingModels ? "Loading..." : "Select model"} />
           </SelectTrigger>
           <SelectContent>
             {models?.map((model) => (
-              <SelectItem key={model.id} value={model.id}>
+              <SelectItem key={model.id} value={model.id} className="text-xs">
                 {model.id}
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
-      </div>
-      <div className="flex space-x-2">
-        <Textarea
-          value={input}
-          onChange={(e) => onInputChange(e.target.value)}
-          placeholder="Type your message..."
-          className="min-h-[60px] flex-1 resize-none text-sm"
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && !e.shiftKey) {
-              e.preventDefault();
-              onSubmit();
-            }
-          }}
-        />
         <Button
           onClick={onSubmit}
           disabled={isLoading || isLoadingModels}
-          className="self-end"
+          size="icon"
+          className="h-8 w-8"
         >
-          {isLoading ? "Sending..." : "Send"}
+          <Send className="h-4 w-4" />
+          <span className="sr-only">Send message</span>
         </Button>
       </div>
     </div>
