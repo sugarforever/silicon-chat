@@ -10,19 +10,42 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
+
+const navigation = [
+  { name: "Home", href: "/" },
+  { name: "Chat", href: "/chat" },
+  { name: "Settings", href: "/settings" },
+];
 
 export default function Navbar() {
   const { data: session } = useSession();
+  const pathname = usePathname();
 
   return (
-    <nav className="bg-background border-b">
+    <nav className="bg-background border-b flex flex-0">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
+            <Link href="/" className="text-xl font-bold">
+              SiliconChat
+            </Link>
             <div className="ml-10 flex items-baseline space-x-4">
-              <Link href="/" className="text-gray-600 hover:text-gray-900">
-                首页
-              </Link>
+              {navigation.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "px-3 py-2 text-sm font-medium rounded-md",
+                    pathname === item.href
+                      ? "bg-secondary text-secondary-foreground"
+                      : "text-muted-foreground hover:bg-secondary/50 hover:text-secondary-foreground"
+                  )}
+                >
+                  {item.name}
+                </Link>
+              ))}
             </div>
           </div>
           <div className="flex items-center">
@@ -38,7 +61,7 @@ export default function Navbar() {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-56">
                     <DropdownMenuItem className="justify-end" onClick={() => signOut()}>
-                      退出登录
+                      Sign Out
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -48,7 +71,7 @@ export default function Navbar() {
                 variant="ghost"
                 onClick={() => signIn("google")}
               >
-                登录
+                Sign In
               </Button>
             )}
           </div>
